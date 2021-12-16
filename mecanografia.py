@@ -90,6 +90,7 @@ validador_primera_vez = 0
 def comienzo_juego_tiempo():
     global validador_primera_vez
     global finalizar
+    global validator_of_thread
     numero_segundos = 59
     numero_minutos = 1
     if validador_primera_vez == 0:
@@ -109,6 +110,7 @@ def comienzo_juego_tiempo():
             if numero_minutos == -1:
                 texto_pantalla.config(text="Has acertado {} palabras".format(numero_aciertos))
                 finalizar = 1
+                validator_of_thread = 2
                 break
             minutos.config(text=numero_minutos)
             numero_segundos = 59
@@ -118,6 +120,7 @@ validator_of_thread = 0
 
 def new_thread():
     global validator_of_thread
+    global finalizar
     if validator_of_thread == 0:
         thread1 = threading.Thread(target=comienzo_juego_tiempo)
         thread2 = threading.Thread(target=keylogger)
@@ -127,6 +130,10 @@ def new_thread():
         thread2.start()
         test_mecanograifa()
         validator_of_thread = 1
+    elif validator_of_thread == 2:
+        finalizar = 0
+        validator_of_thread = 1
+        test_mecanograifa()
 
 def test_mecanograifa():
     global numero_palabra
