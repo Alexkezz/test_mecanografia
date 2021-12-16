@@ -77,6 +77,7 @@ def palabra_aleatoria():
 
 root = Tk()
 root.title("TEST DE MECANOGRAFIA")
+root.resizable(0, 0)
 
 mi_frame = Frame(root, bg="#a8ffff")
 mi_frame.pack()
@@ -89,14 +90,19 @@ validador_primera_vez = 0
 def comienzo_juego_tiempo():
     global validador_primera_vez
     numero_segundos = 59
-    numero_minutos = 2
+    numero_minutos = 1
     if validador_primera_vez == 0:
         segundos.config(text=numero_segundos)
+        numero_minutos -= 1
+        minutos.config(text=numero_minutos)
         validador_primera_vez = 1
     while True:
         numero_segundos -= 1
         time.sleep(1)
-        segundos.config(text=numero_segundos)
+        if numero_segundos < 10:
+            segundos.config(text="0"+str(numero_segundos))
+        else:
+            segundos.config(text=numero_segundos)
         if numero_segundos == 0:
             numero_minutos -= 1
             if numero_minutos == -1:
@@ -131,11 +137,9 @@ def resolution_word():
     global numero_aciertos
     my_word = entrada_texto.get()
     if my_word == palabra_fuera:
-        print("correcto")
         numero_aciertos += 1
         entrada_texto.delete(0, END)
     else:
-        print("malament")
         entrada_texto.delete(0, END)
 
 validator_test = 0
@@ -150,10 +154,9 @@ def keylogger():
     with keyboard.Listener(on_press=on_press) as listener:
         listener.join()  
    
-
 #ESTRUCTURA TKINTER----------------------------------------------------
 
-texto_principal = Label(mi_frame, text="Escribe el numero de palabras\nlo mas rapido posible!", font=("Noto Mono", 30), bg="#c6b8e9", relief="raised")
+texto_principal = Label(mi_frame, text="Escribe el numero de palabras\n en el menor tiempo posible!", font=("Noto Mono", 30), bg="#c6b8e9", relief="raised")
 texto_principal.grid(row=0, column=0, columnspan=1, pady=(10, 50), padx=10)
 
 texto_pantalla = Label(mi_frame, text="Palabra", font=("Calibri",30), relief="flat", bg="#a8ffff")
@@ -165,8 +168,8 @@ entrada_texto.place(y=400, x=150)
 boton_empezar = Button(mi_frame, text="EMPEZAR", font=("Calibri", 14), command=lambda:new_thread())
 boton_empezar.place(y=398, x=575)
 
-minutos = Label(mi_frame, text="2", font=("Calibri", 30), bg="#a8ffff")
-minutos.place(x=635, y=200)
+minutos = Label(mi_frame, text="1", font=("Calibri", 30), bg="#a8ffff")
+minutos.place(x=632, y=200)
 
 dos_puntos = Label(mi_frame, text=":", font=("Calibri", 30), bg="#a8ffff")
 dos_puntos.place(x=655, y=200)
