@@ -89,6 +89,7 @@ validador_primera_vez = 0
 
 def comienzo_juego_tiempo():
     global validador_primera_vez
+    global finalizar
     numero_segundos = 59
     numero_minutos = 1
     if validador_primera_vez == 0:
@@ -107,6 +108,7 @@ def comienzo_juego_tiempo():
             numero_minutos -= 1
             if numero_minutos == -1:
                 texto_pantalla.config(text="Has acertado {} palabras".format(numero_aciertos))
+                finalizar = 1
                 break
             minutos.config(text=numero_minutos)
             numero_segundos = 59
@@ -147,13 +149,17 @@ def resolution_word():
         entrada_texto.delete(0, END)
 
 validator_test = 0
+finalizar = 0
 
 def keylogger():
     def on_press(key):
         global validator_test
         if key == keyboard.Key.space:
+            if finalizar == 0:
                 resolution_word()
                 test_mecanograifa()
+            else:
+                pass
 
     with keyboard.Listener(on_press=on_press) as listener:
         listener.join()  
