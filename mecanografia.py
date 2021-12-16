@@ -85,8 +85,8 @@ mi_frame.pack()
 #METODOS---------------------------------------------------------------
 
 txt_entry = StringVar()
-
 validador_primera_vez = 0
+
 def comienzo_juego_tiempo():
     global validador_primera_vez
     numero_segundos = 59
@@ -117,8 +117,12 @@ validator_of_thread = 0
 def new_thread():
     global validator_of_thread
     if validator_of_thread == 0:
-        threading.Thread(target=comienzo_juego_tiempo).start()
-        threading.Thread(target=keylogger).start()
+        thread1 = threading.Thread(target=comienzo_juego_tiempo)
+        thread2 = threading.Thread(target=keylogger)
+        thread1.setDaemon(True)
+        thread2.setDaemon(True)
+        thread1.start()
+        thread2.start()
         test_mecanograifa()
         validator_of_thread = 1
 
