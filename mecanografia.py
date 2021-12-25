@@ -195,3 +195,4 @@ segundos = Label(mi_frame, text="00", font=("Calibri", 30), bg="#a8ffff",)
 segundos.place(x=670, y=200)
 
 root.mainloop()
+#Fin
